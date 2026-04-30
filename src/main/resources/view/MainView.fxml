@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.fruitapp1.view.MainViewController">
+            fx:controller="com.example.orderit.MainViewController">
 
     <center>
         <ScrollPane fitToWidth="true">

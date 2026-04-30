@@ -1,9 +1,6 @@
 package com.example.orderit.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Fruit {
-    @JsonProperty("naam")
     private String name;
 
     public Fruit(String name) {
