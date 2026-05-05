@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 
+
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.orderit.MainViewController">
@@ -21,6 +22,8 @@
             </content>
         </ScrollPane>
     </center>
+
+
 
     <right>
         <BorderPane fx:id="cartPane"
