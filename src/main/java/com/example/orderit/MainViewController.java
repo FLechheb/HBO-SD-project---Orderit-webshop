@@ -40,6 +40,26 @@ public class MainViewController {
         fruitList.add(fruit5);
         fruitList.add(fruit7);
         fruitList.add(fruit8);
+        fruitList.add(new Fruit("Banaan", 1.20));
+        fruitList.add(new Fruit("Appel", 1.50));
+        fruitList.add(new Fruit("Perzik", 2.00));
+        fruitList.add(new Fruit("Mango", 2.80));
+        fruitList.add(new Fruit("Aardbei", 3.00));
+        fruitList.add(new Fruit("Kiwi", 1.70));
+        fruitList.add(new Fruit("Ananas", 3.50));
+        fruitList.add(new Fruit("Watermeloen", 4.20));
+        fruitList.add(new Fruit("Druiven", 2.40));
+        fruitList.add(new Fruit("Sinaasappel", 1.90));
+        fruitList.add(new Fruit("Citroen", 1.10));
+        fruitList.add(new Fruit("Limoen", 1.30));
+        fruitList.add(new Fruit("Kers", 3.80));
+        fruitList.add(new Fruit("Framboos", 4.00));
+        fruitList.add(new Fruit("Blauwe bes", 4.50));
+        fruitList.add(new Fruit("Peer", 1.60));
+        fruitList.add(new Fruit("Pruim", 2.10));
+        fruitList.add(new Fruit("Papaja", 3.90));
+        fruitList.add(new Fruit("Kokosnoot", 5.00));
+        fruitList.add(new Fruit("Passievrucht", 2.70));
 
         //Blok aanmaken met fruitsoort
         createFruitCards(fruitList);
@@ -75,7 +95,6 @@ public class MainViewController {
     private VBox createFruitInfoBox(Fruit fruit) {
         Label name = new Label(fruit.getName());
         name.getStyleClass().add("fruit-name");
-
         Label price = new Label("€" + fruit.getPrice());
 
         Button addButton = new Button("Voeg toe");
