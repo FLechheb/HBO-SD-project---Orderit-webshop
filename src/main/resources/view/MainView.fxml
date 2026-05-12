@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -7,50 +8,66 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<HBox spacing="30" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.orderit.MainViewController">
-<BorderPane prefHeight="745.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/17.0.12">
 
-<left>
-        <ScrollPane fitToWidth="true" prefHeight="800.0" prefWidth="1200.0">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.orderit.MainViewController">
+
+    <center>
+        <ScrollPane fitToWidth="true">
             <content>
-                <GridPane fx:id="fruitGrid" hgap="20" vgap="20" BorderPane.alignment="CENTER">
+                <GridPane fx:id="fruitGrid"
+                          hgap="50" vgap="40"
+                          BorderPane.alignment="CENTER">
                     <padding>
-                        <Insets bottom="20" left="20" right="20" top="20" />
+                        <Insets top="30" right="20" bottom="20" left="20"/>
                     </padding>
                     </GridPane>
             </content>
         </ScrollPane>
-</left>
+    </center>
 
+
+
+    <right>
+
+        <VBox alignment="CENTER_RIGHT" prefHeight="800.0" prefWidth="400.0">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="20.0" top="20.0" />
+            </padding>
+            <Label contentDisplay="CENTER" lineSpacing="40.0" prefHeight="28.0" prefWidth="340.0" text="Winkelmandje">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font></Label>
+            <children>
+                <ListView  fx:id="winkelmandList" prefWidth="200">
+                    <effect>
+                        <Lighting>
+                            <bumpInput>
+                                <Shadow blurType="TWO_PASS_BOX" height="26.9" radius="12.95" width="26.9">
+                                    <color>
+                                        <Color red="1.0" green="0.6" />
+                                    </color>
+                                </Shadow>
+                            </bumpInput>
+                            <light>
+                                <Light.Distant elevation="69.97">
+                                    <color>
+                                        <Color red="1.0" green="0.9627314805984497" blue="0.9027777910232544" />
+                                    </color>
+                                </Light.Distant>
+                            </light>
+                        </Lighting>
+                    </effect>
+                </ListView>
+                <Region prefHeight="20" />
+                <Label fx:id="totaalLabel" alignment="BOTTOM_RIGHT" lineSpacing="30" text="Totaal: €0.00" >
+                <font>
+                    <Font name="System Bold" size="22.0" />
+                </font></Label>
+                <Region prefHeight="20" />
+                <Button onAction="#clearMand" text="Leeg winkelmandje" />
+            </children></VBox>
+    </right>
 
 </BorderPane>
-<VBox alignment="CENTER_RIGHT" prefHeight="800.0" prefWidth="320.0">
-    <Label contentDisplay="CENTER" lineSpacing="40.0" prefHeight="28.0" prefWidth="301.0" text="Winkelmandje">
-        <font>
-            <Font name="System Bold" size="22.0" />
-        </font></Label>
-      <children>
-<ListView  fx:id="winkelmandList" prefWidth="200">
- <effect>
-     <Lighting>
-         <bumpInput>
-             <Shadow blurType="TWO_PASS_BOX" height="26.9" radius="12.95" width="26.9">
-                 <color>
-                     <Color red="1.0" green="0.6" />
-                 </color>
-             </Shadow>
-         </bumpInput>
-         <light>
-             <Light.Distant elevation="69.97">
-                 <color>
-                     <Color red="1.0" green="0.9627314805984497" blue="0.9027777910232544" />
-                 </color>
-             </Light.Distant>
-         </light>
-     </Lighting>
- </effect>
-         </ListView>
-<Label fx:id="totaalLabel" alignment="BOTTOM_RIGHT" lineSpacing="30" text="Totaal: €0.00" />
-<Button onAction="#clearMand" text="Leeg winkelmandje" />
-      </children></VBox>
-</HBox>
