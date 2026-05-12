@@ -1,6 +1,5 @@
 package com.example.orderit;
 
-import com.example.orderit.model.Fruit;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
