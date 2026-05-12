@@ -1,9 +1,11 @@
 package com.example.orderit;
 
+import com.example.orderit.model.Fruit;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
-
+import javafx.scene.control.ChoiceBox;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,20 @@ public class MainViewController {
 
     private List<Fruit> fruitList = new ArrayList<>();
 
+    @FXML
+    private ListView<String> winkelmandList;
+
+    private double totaalPrijs = 0;
+
+    @FXML
+    private Label totaalLabel;
+
+    @FXML
+    protected void clearMand() {
+        winkelmandList.getItems().clear();
+        totaalPrijs = 0;
+        totaalLabel.setText("Totaal: €0.00");
+    }
 
     @FXML
     public void initialize() {
@@ -40,6 +56,8 @@ public class MainViewController {
         //Blok aanmaken met fruitsoort
         createFruitCards(fruitList);
     }
+
+
 
     private void createFruitCards(List<Fruit> fruitlijst) {
         int col = 0, row = 1;
@@ -73,6 +91,17 @@ public class MainViewController {
         name.getStyleClass().add("fruit-name");
 
         return new VBox(4, name);
+    }
+
+
+
+    private void addProduct(Fruit fruit) {
+        String tekst = fruit.getName() + " toegevoegd aan winkelmandje";
+
+        winkelmandList.getItems().add(tekst);
+        totaalPrijs += 1; //  (tijdelijk)
+
+        totaalLabel.setText("Totaal: €" + String.format("%.2f", totaalPrijs));
     }
 }
 

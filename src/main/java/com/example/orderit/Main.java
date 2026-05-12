@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
-        Scene scene = new Scene(loader.load(), 750, 450);
+        Scene scene = new Scene(loader.load(), 1500, 850);
 
         scene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/view/style.css")).toExternalForm()
