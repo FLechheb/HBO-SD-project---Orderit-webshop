@@ -9,6 +9,20 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.orderit.MainViewController">
 
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label text="Zoek:"/>
+
+            <TextField fx:id="searchField"
+                       promptText="Zoek fruit..."
+                       onKeyReleased="#filterFruit"/>
+        </HBox>
+    </top>
+
     <center>
         <ScrollPane fitToWidth="true">
             <content>

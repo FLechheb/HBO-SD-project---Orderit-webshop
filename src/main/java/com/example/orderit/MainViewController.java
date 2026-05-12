@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -22,24 +24,14 @@ public class MainViewController {
 
     private List<Fruit> fruitList = new ArrayList<>();
 
+    @FXML
+    private TextField searchField;
+
 
     @FXML
     public void initialize() {
-        //Fruitsoorten aanmaken
-        Fruit fruit1 = new Fruit("Banaan", 1.20);
-        Fruit fruit2 = new Fruit("Appel", 1.50);
-        Fruit fruit4 = new Fruit("Perzik", 2.00);
-        Fruit fruit5 = new Fruit("Mango", 2.80);
-        Fruit fruit7 = new Fruit("Aardbei", 3.00);
-        Fruit fruit8 = new Fruit("Kiwi", 1.70);
+        //Fruitsoorten aanmaken en toevoegen aan arrayList
 
-        //Fruitsoorten toevoegen aan arrayList
-        fruitList.add(fruit1);
-        fruitList.add(fruit2);
-        fruitList.add(fruit4);
-        fruitList.add(fruit5);
-        fruitList.add(fruit7);
-        fruitList.add(fruit8);
         fruitList.add(new Fruit("Banaan", 1.20));
         fruitList.add(new Fruit("Appel", 1.50));
         fruitList.add(new Fruit("Perzik", 2.00));
@@ -109,5 +101,14 @@ public class MainViewController {
 
         return new VBox(6, name, price, addButton);
     }
+
+
+    @FXML
+    private void filterFruit() {
+        String searchText = searchField.getText().toLowerCase();
+
+
+    }
+
 }
 
