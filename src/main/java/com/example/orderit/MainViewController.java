@@ -2,6 +2,7 @@ package com.example.orderit;
 
 import com.example.orderit.model.Fruit;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
@@ -13,6 +14,11 @@ public class MainViewController {
 
     @FXML
     private GridPane fruitGrid;
+
+    @FXML
+    private ListView<String> cartListView;
+
+    private double total = 0;
 
     private List<Fruit> fruitList = new ArrayList<>();
 
@@ -34,22 +40,18 @@ public class MainViewController {
     @FXML
     public void initialize() {
         //Fruitsoorten aanmaken
-        Fruit fruit1 = new Fruit("Banaan");
-        Fruit fruit2 = new Fruit("Appel");
-        Fruit fruit3 = new Fruit("Sinaasappel");
-        Fruit fruit4 = new Fruit("Perzik");
-        Fruit fruit5 = new Fruit("Mango");
-        Fruit fruit6 = new Fruit("Ananas");
-        Fruit fruit7 = new Fruit("Aardbei");
-        Fruit fruit8 = new Fruit("Kiwi");
+        Fruit fruit1 = new Fruit("Banaan", 1.20);
+        Fruit fruit2 = new Fruit("Appel", 1.50);
+        Fruit fruit4 = new Fruit("Perzik", 2.00);
+        Fruit fruit5 = new Fruit("Mango", 2.80);
+        Fruit fruit7 = new Fruit("Aardbei", 3.00);
+        Fruit fruit8 = new Fruit("Kiwi", 1.70);
 
         //Fruitsoorten toevoegen aan arrayList
         fruitList.add(fruit1);
         fruitList.add(fruit2);
-        fruitList.add(fruit3);
         fruitList.add(fruit4);
         fruitList.add(fruit5);
-        fruitList.add(fruit6);
         fruitList.add(fruit7);
         fruitList.add(fruit8);
 
@@ -85,12 +87,24 @@ public class MainViewController {
         return card;
     }
 
-    // De naam van de item in een VBox stoppen
+    //info van de fruit realiseren
     private VBox createFruitInfoBox(Fruit fruit) {
         Label name = new Label(fruit.getName());
         name.getStyleClass().add("fruit-name");
 
-        return new VBox(4, name);
+        Label price = new Label("€" + fruit.getPrice());
+
+        Button addButton = new Button("Voeg toe");
+        name.getStyleClass().add("add-button");
+
+
+        addButton.setOnAction(e -> {
+            cartListView.getItems().add(fruit.getName() + " - €" + fruit.getPrice());
+            total += fruit.getPrice();
+            System.out.println("Totaal: €" + total); // later label maken
+        });
+
+        return new VBox(6, name, price, addButton);
     }
 
 
