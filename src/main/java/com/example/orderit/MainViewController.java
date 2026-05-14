@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.ChoiceBox;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class MainViewController {
     private List<Fruit> fruitList = new ArrayList<>();
 
     @FXML
+<<<<<<< HEAD
     private ListView<String> winkelmandList;
 
     private double totaalPrijs = 0;
@@ -102,41 +105,34 @@ public class MainViewController {
         totaalLabel.setText("Totaal: €0.00");
     }
 
+    private TextField searchField;
+
+
     @FXML
     public void initialize() {
-        //Fruitsoorten aanmaken
-        Fruit fruit1 = new Fruit("Banaan", 1.20);
-        Fruit fruit2 = new Fruit("Appel", 1.50);
-        Fruit fruit4 = new Fruit("Perzik", 2.00);
-        Fruit fruit5 = new Fruit("Mango", 2.80);
-        Fruit fruit7 = new Fruit("Aardbeien", 3.00);
-        Fruit fruit8 = new Fruit("Kiwi", 2.75);
-        Fruit fruit9 = new Fruit("Avocado", 3.50);
-        Fruit fruit10 = new Fruit("Sinaasappel", 1.50);
-        Fruit fruit11 = new Fruit("Meloen", 1.25);
-        Fruit fruit12 = new Fruit("Citroen", 2.20);
-        Fruit fruit13 = new Fruit("Limoen", 2.00);
-        Fruit fruit14 = new Fruit("Blauwe bessen", 4.00);
-        Fruit fruit15 = new Fruit("Abrikoos", 2.75);
-        Fruit fruit16 = new Fruit("Peer", 1.75);
-        Fruit fruit17 = new Fruit("Ananas", 2.50);
+        //Fruitsoorten aanmaken en toevoegen aan arrayList
 
-        //Fruitsoorten toevoegen aan arrayList
-        fruitList.add(fruit1);
-        fruitList.add(fruit2);
-        fruitList.add(fruit4);
-        fruitList.add(fruit5);
-        fruitList.add(fruit7);
-        fruitList.add(fruit8);
-        fruitList.add(fruit9);
-        fruitList.add(fruit10);
-        fruitList.add(fruit11);
-        fruitList.add(fruit12);
-        fruitList.add(fruit13);
-        fruitList.add(fruit14);
-        fruitList.add(fruit15);
-        fruitList.add(fruit16);
-        fruitList.add(fruit17);
+        fruitList.add(new Fruit("Banaan", 1.20));
+        fruitList.add(new Fruit("Appel", 1.50));
+        fruitList.add(new Fruit("Perzik", 2.00));
+        fruitList.add(new Fruit("Mango", 2.80));
+        fruitList.add(new Fruit("Aardbei", 3.00));
+        fruitList.add(new Fruit("Kiwi", 1.70));
+        fruitList.add(new Fruit("Ananas", 3.50));
+        fruitList.add(new Fruit("Watermeloen", 4.20));
+        fruitList.add(new Fruit("Druiven", 2.40));
+        fruitList.add(new Fruit("Sinaasappel", 1.90));
+        fruitList.add(new Fruit("Citroen", 1.10));
+        fruitList.add(new Fruit("Limoen", 1.30));
+        fruitList.add(new Fruit("Kers", 3.80));
+        fruitList.add(new Fruit("Framboos", 4.00));
+        fruitList.add(new Fruit("Blauwe bes", 4.50));
+        fruitList.add(new Fruit("Peer", 1.60));
+        fruitList.add(new Fruit("Pruim", 2.10));
+        fruitList.add(new Fruit("Papaja", 3.90));
+        fruitList.add(new Fruit("Kokosnoot", 5.00));
+        fruitList.add(new Fruit("Passievrucht", 2.70));
+>>>>>>> zoekfuntie
 
         //Blok aanmaken met fruitsoort
         createFruitCards(fruitList);
@@ -223,7 +219,6 @@ public class MainViewController {
     private VBox createFruitInfoBox(Fruit fruit) {
         Label name = new Label(fruit.getName());
         name.getStyleClass().add("fruit-name");
-
         Label price = new Label("€" + fruit.getPrice());
 
         Button addButton = new Button("Voeg toe");
@@ -238,5 +233,27 @@ public class MainViewController {
     }
 
 
+<<<<<<< HEAD
+=======
+    @FXML
+    private void filterFruit() {
+        String searchText = searchField.getText().toLowerCase();
+
+        List<Fruit> filteredList = new ArrayList<>();
+
+        for (Fruit fruit : fruitList) {
+
+            if (fruit.getName().toLowerCase().contains(searchText)) {
+                filteredList.add(fruit);
+            }
+        }
+
+        // Grid leegmaken
+        fruitGrid.getChildren().clear();
+
+        // Nieuwe gefilterde cards tonen
+        createFruitCards(filteredList);
+    }
+>>>>>>> zoekfuntie
 }
 

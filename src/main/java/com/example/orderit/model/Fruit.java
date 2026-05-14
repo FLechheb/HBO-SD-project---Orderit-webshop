@@ -16,5 +16,4 @@ public class Fruit {
     public double getPrice() {
         return price;
     }
-    public void setName(String name) { this.name = name; }
 }
