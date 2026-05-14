@@ -107,8 +107,20 @@ public class MainViewController {
     private void filterFruit() {
         String searchText = searchField.getText().toLowerCase();
 
+        List<Fruit> filteredList = new ArrayList<>();
 
+        for (Fruit fruit : fruitList) {
+
+            if (fruit.getName().toLowerCase().contains(searchText)) {
+                filteredList.add(fruit);
+            }
+        }
+
+        // Grid leegmaken
+        fruitGrid.getChildren().clear();
+
+        // Nieuwe gefilterde cards tonen
+        createFruitCards(filteredList);
     }
-
 }
 
