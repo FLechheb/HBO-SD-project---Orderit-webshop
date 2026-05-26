@@ -1,17 +1,17 @@
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-background-color: #c7e6c2;
+    -fx-background-color: #ffa94b;
     -fx-text-fill: #2b2b2b;
 }
 
 .card {
-    -fx-background-color: #c7e6c2;
+    -fx-background-color: #e9d7c6;
     -fx-padding: 12;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-border-color: #5c9c7a;
+    -fx-border-color: #ef7706;
     -fx-border-width: 1;
-    -fx-effect: dropshadow( Gaussian , rgba(0,0,0,0.2) , 6, 0, 0, 1 );
+    -fx-effect: innershadow(gaussian, rgba(255,169,95,0.72), 6, 0, 0, 1);
 }
 
 .fruit-name {
@@ -21,14 +21,14 @@
 }
 
 #cartPane {
-    -fx-background-color: #c7e6c2;
-    -fx-border-color: #5c9c7a;
+    -fx-background-color: #f27f04;
+    -fx-border-color: #f27f04;
     -fx-border-width: 1;
     -fx-padding: 10;
 }
 
 #cartTitle {
-    -fx-font-size: 18px;
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #1f3d2f;
     -fx-padding: 0 0 30 0;

@@ -1,14 +1,20 @@
 package com.example.orderit;
 
+
 import com.example.orderit.model.Fruit;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,78 +23,129 @@ public class MainViewController {
     @FXML
     private GridPane fruitGrid;
 
-
     private List<Fruit> fruitList = new ArrayList<>();
 
     @FXML
-<<<<<<< HEAD
-    private ListView<String> winkelmandList;
+    private TableView<CartItem> winkelmandTable;
+
+    @FXML
+    private TableColumn<CartItem, String> productColumn;
+
+    @FXML
+    private TableColumn<CartItem, Integer> aantalColumn;
+
+    @FXML
+    private TableColumn<CartItem, Double> prijsColumn;
 
     private double totaalPrijs = 0;
 
     @FXML
     private Label totaalLabel;
 
+    @FXML
+    private TextField searchField;
+
+    public static class CartItem {
+
+        private String product;
+        private int aantal;
+        private double prijs;
+
+        public CartItem(String product, int aantal, double prijs) {
+            this.product = product;
+            this.aantal = aantal;
+            this.prijs = prijs;
+        }
+
+        public String getProduct() {
+            return product;
+        }
+
+        public int getAantal() {
+            return aantal;
+        }
+
+        public double getPrijs() {
+            return prijs;
+        }
+
+        public void setAantal(int aantal) {
+            this.aantal = aantal;
+        }
+
+        public void setPrijs(double prijs) {
+            this.prijs = prijs;
+        }
+    }
+
+    @FXML
+    private TableColumn<CartItem, Void> plusColumn;
+
+    @FXML
+    private TableColumn<CartItem, Void> minColumn;
+
+
+
+    @FXML
+    private void plusOne() {
+
+        CartItem item = winkelmandTable.getSelectionModel().getSelectedItem();
+
+        if (item != null) {
+
+            for (Fruit fruit : fruitList) {
+
+                if (fruit.getName().equals(item.getProduct())) {
+                    addOne(fruit);
+                    break;
+                }
+            }
+        }
+    }
+
     private void addOne(Fruit fruit) {
-        String naam = fruit.getName();
 
-        for (int i = 0; i < winkelmandList.getItems().size(); i++) {
-            String item = winkelmandList.getItems().get(i);
+        for (CartItem item : winkelmandTable.getItems()) {
 
-            if (item.startsWith(naam)) {
-                int aantal = Integer.parseInt(item.split("x")[1].split(" - ")[0]);
-                double prijs = (aantal + 1) * fruit.getPrice();
+            if (item.getProduct().equals(fruit.getName())) {
 
-                winkelmandList.getItems().set(
-                        i,
-                        naam + " x" + (aantal + 1) + " - €" + String.format("%.2f", prijs)
-                );
+                item.setAantal(item.getAantal() + 1);
+                item.setPrijs(item.getAantal() * fruit.getPrice());
+
+                winkelmandTable.refresh();
+
                 totaalPrijs += fruit.getPrice();
                 totaalLabel.setText("Totaal: €" + String.format("%.2f", totaalPrijs));
+
                 return;
             }
         }
 
-        winkelmandList.getItems().add(
-                naam + " x1 - €" + String.format("%.2f", fruit.getPrice())
+        winkelmandTable.getItems().add(
+                new CartItem(fruit.getName(), 1, fruit.getPrice())
         );
 
         totaalPrijs += fruit.getPrice();
         totaalLabel.setText("Totaal: €" + String.format("%.2f", totaalPrijs));
     }
 
-    private void removeOne(String item) {
-        for (int i = 0; i < winkelmandList.getItems().size(); i++) {
+    private void removeOne(CartItem item) {
 
-            String current = winkelmandList.getItems().get(i);
+        for (Fruit fruit : fruitList) {
 
-            if (current.equals(item)) {
+            if (fruit.getName().equals(item.getProduct())) {
 
-                String naam = item.split(" x")[0];
-                int aantal = Integer.parseInt(item.split("x")[1].split(" - ")[0]);
+                totaalPrijs -= fruit.getPrice();
 
-                Fruit gekozenFruit = null;
+                if (item.getAantal() <= 1) {
+                    winkelmandTable.getItems().remove(item);
 
-                for (Fruit fruit : fruitList) {
-                    if (fruit.getName().equals(naam)) {
-                        gekozenFruit = fruit;
-                        break;
-                    }
-                }
-
-                if (gekozenFruit != null) {
-                    totaalPrijs -= gekozenFruit.getPrice();
-                }
-
-                if (aantal <= 1) {
-                    winkelmandList.getItems().remove(i);
                 } else {
-                    double prijs = (aantal - 1) * gekozenFruit.getPrice();
 
-                    winkelmandList.getItems().set(
-                            i,
-                            naam + " x" + (aantal - 1) + " - €" + String.format("%.2f", prijs)
-                    );
+                    item.setAantal(item.getAantal() - 1);
+                    item.setPrijs(item.getAantal() * fruit.getPrice());
+
+                    winkelmandTable.refresh();
                 }
 
                 totaalLabel.setText("Totaal: €" + String.format("%.2f", totaalPrijs));
@@ -100,17 +157,14 @@ public class MainViewController {
 
     @FXML
     protected void clearMand() {
-        winkelmandList.getItems().clear();
+        winkelmandTable.getItems().clear();
         totaalPrijs = 0;
         totaalLabel.setText("Totaal: €0.00");
     }
 
-    private TextField searchField;
-
 
     @FXML
     public void initialize() {
-        //Fruitsoorten aanmaken en toevoegen aan arrayList
 
         fruitList.add(new Fruit("Banaan", 1.20));
         fruitList.add(new Fruit("Appel", 1.50));
@@ -132,69 +186,83 @@ public class MainViewController {
         fruitList.add(new Fruit("Papaja", 3.90));
         fruitList.add(new Fruit("Kokosnoot", 5.00));
         fruitList.add(new Fruit("Passievrucht", 2.70));
->>>>>>> zoekfuntie
 
-        //Blok aanmaken met fruitsoort
         createFruitCards(fruitList);
 
+        productColumn.setCellValueFactory(new PropertyValueFactory<>("product"));
+        aantalColumn.setCellValueFactory(new PropertyValueFactory<>("aantal"));
+        prijsColumn.setCellValueFactory(new PropertyValueFactory<>("prijs"));
+        prijsColumn.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : "€" + String.format("%.2f", item));
+            }
+        });
+        minColumn.setCellFactory(param -> new TableCell<>() {
 
-        winkelmandList.setCellFactory(param -> new javafx.scene.control.ListCell<>() {
-
-            private final Button plusButton = new Button("+");
-            private final Button minButton = new Button("-");
-
-            private final HBox box = new HBox(10);
+            private final Button button = new Button("-");
 
             {
-                box.getChildren().addAll(minButton, plusButton);
+                button.setOnAction(e -> {
 
-                plusButton.setOnAction(e -> {
-                    String item = getItem();
+                    CartItem item = getTableView().getItems().get(getIndex());
 
-                    if (item != null) {
-                        String naam = item.split(" x")[0];
-
-                        for (Fruit fruit : fruitList) {
-                            if (fruit.getName().equals(naam)) {
-                                addOne(fruit);
-                                break;
-                            }
-                        }
-                    }
-                });
-
-                minButton.setOnAction(e -> {
-                    removeOne(getItem());
+                    removeOne(item);
                 });
             }
 
             @Override
-            protected void updateItem(String item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (empty || item == null) {
+                if (empty) {
                     setGraphic(null);
                 } else {
-                    Label label = new Label(item);
+                    setGraphic(button);
+                }
+            }
+        });
+        plusColumn.setCellFactory(param -> new TableCell<>() {
 
-                    HBox layout = new HBox(10, label, minButton, plusButton);
+            private final Button button = new Button("+");
 
-                    setGraphic(layout);
+            {
+                button.setOnAction(e -> {
+
+                    CartItem item = getTableView().getItems().get(getIndex());
+
+                    for (Fruit fruit : fruitList) {
+
+                        if (fruit.getName().equals(item.getProduct())) {
+                            addOne(fruit);
+                            break;
+                        }
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(button);
                 }
             }
         });
     }
 
-
     private void createFruitCards(List<Fruit> fruitlijst) {
         int col = 0, row = 1;
 
-        //Voor elke fruitsoort uit de array een fruitCard maken en toevoegen aan de Grid
-        //Max 3 items per rij
         for (Fruit fruit : fruitlijst) {
             VBox card = createFruitCard(fruit);
             fruitGrid.add(card, col, row);
             col++;
+
             if (col > 2) {
                 col = 0;
                 row++;
@@ -202,41 +270,34 @@ public class MainViewController {
         }
     }
 
-    //Fruitcard maken met de style card
     private VBox createFruitCard(Fruit fruit) {
         VBox card = new VBox(8);
         card.getStyleClass().add("card");
         card.prefWidthProperty().bind(fruitGrid.widthProperty().divide(4).subtract(20));
 
-        //Naam toevoegen (in een VBox zodat andere info toevoegen later makkelijker is)
         VBox infoBox = createFruitInfoBox(fruit);
         card.getChildren().addAll(infoBox.getChildren());
 
         return card;
     }
 
-    //info van de fruit realiseren
     private VBox createFruitInfoBox(Fruit fruit) {
+
         Label name = new Label(fruit.getName());
         name.getStyleClass().add("fruit-name");
+
         Label price = new Label("€" + fruit.getPrice());
 
         Button addButton = new Button("Voeg toe");
-        name.getStyleClass().add("add-button");
 
-
-        addButton.setOnAction(e -> {
-            addOne(fruit);
-        });
+        addButton.setOnAction(e -> addOne(fruit));
 
         return new VBox(6, name, price, addButton);
     }
 
-
-<<<<<<< HEAD
-=======
     @FXML
     private void filterFruit() {
+
         String searchText = searchField.getText().toLowerCase();
 
         List<Fruit> filteredList = new ArrayList<>();
@@ -248,12 +309,8 @@ public class MainViewController {
             }
         }
 
-        // Grid leegmaken
         fruitGrid.getChildren().clear();
 
-        // Nieuwe gefilterde cards tonen
         createFruitCards(filteredList);
     }
->>>>>>> zoekfuntie
 }
-
