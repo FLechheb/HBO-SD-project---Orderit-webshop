@@ -24,6 +24,8 @@
             <TextField fx:id="searchField"
                        promptText="Zoek fruit..."
                        onKeyReleased="#filterFruit"/>
+            <ChoiceBox fx:id="categoryBox"
+                       onAction="#filterCategory" />
         </HBox>
     </top>
 

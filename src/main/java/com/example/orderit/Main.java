@@ -18,7 +18,7 @@ public class Main extends Application {
                 Objects.requireNonNull(getClass().getResource("/view/style.css")).toExternalForm()
         );
 
-        stage.setTitle("Orderit Sprint 1");
+        stage.setTitle("Orderit App");
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
