@@ -11,11 +11,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(
+                Main.class.getResource("/view/MainView.fxml"),
+                "Missing FXML resource: /view/MainView.fxml"
+        ));
         Scene scene = new Scene(loader.load(), 1500, 850);
 
         scene.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/view/style.css")).toExternalForm()
+                Objects.requireNonNull(
+                        getClass().getResource("/view/style.css"),
+                        "Missing stylesheet resource: /view/style.css"
+                ).toExternalForm()
         );
 
         stage.setTitle("Orderit App");
