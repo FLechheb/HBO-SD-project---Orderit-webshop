@@ -13,6 +13,7 @@ public class Fruit {
     @JsonProperty("price")
     private double price;
 
+
     @JsonProperty("unit")
     private String unit;
 
@@ -21,6 +22,7 @@ public class Fruit {
 
     @JsonProperty("herkomst")
     private String herkomst;
+    private String imagePath;
 
 
     public Fruit() {
@@ -52,5 +54,13 @@ public class Fruit {
 
     public String getHerkomst() {
         return herkomst;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
