@@ -4,10 +4,12 @@ public class CartItem {
 
     private Fruit fruit;
     private int aantal;
+    private String unit;
 
     public CartItem(Fruit fruit, int aantal) {
         this.fruit = fruit;
         this.aantal = aantal;
+        this.unit = unit;
     }
 
     public String getProduct() {

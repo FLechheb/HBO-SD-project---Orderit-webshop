@@ -314,7 +314,9 @@ public class MainViewController {
 
         for (Fruit fruit : fruitList) {
 
-            if (fruit.getName().toLowerCase().contains(searchText)) {
+            if (fruit.getName().toLowerCase().contains(searchText)
+                    || fruit.getCategory().toLowerCase().contains(searchText)) {
+
                 filteredList.add(fruit);
             }
         }
