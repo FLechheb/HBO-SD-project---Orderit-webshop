@@ -20,7 +20,9 @@ public class Main extends Application {
         scene.getStylesheets().add(
                 Objects.requireNonNull(
                         getClass().getResource("/view/style.css"),
+
                         "Missing stylesheet resource: /view/style.css"
+
                 ).toExternalForm()
         );
 
