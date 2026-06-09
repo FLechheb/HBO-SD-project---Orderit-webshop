@@ -5,8 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.orderit.model.Fruit;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,11 +18,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import com.example.orderit.model.CartItem;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class MainViewController {
 
@@ -131,9 +126,8 @@ public class MainViewController {
 
         for (Fruit fruit : fruitList) {
 
-            if (selected == null
-                    || "Alle".equals(selected)
-                    || selected.equals(fruit.getCategory())) {
+            if (selected.equals("Alle")
+                    || fruit.getCategory().equals(selected)) {
 
                 filtered.add(fruit);
             }
@@ -154,7 +148,7 @@ public class MainViewController {
         categoryBox.getItems().add("Steenvruchten");
         categoryBox.getItems().add("Pitfruit");
 
-        categoryBox.setValue("Alle");
+        categoryBox.setValue("Categorie");
 
         try {
 
@@ -164,14 +158,6 @@ public class MainViewController {
                     getClass().getResourceAsStream("/view/vruchtenlijst.json"),
                     new TypeReference<List<Fruit>>() {}
             );
-
-            // Foto pad in het opject Fruit setten.
-            for (Fruit fruit : fruitList) {
-
-                fruit.setImagePath(
-                        buildImagePath(fruit.getName())
-                );
-            }
 
             System.out.println(
                     getClass().getResource("/view/vruchtenlijst.json")
@@ -290,8 +276,6 @@ public class MainViewController {
         card.prefWidthProperty().bind(fruitGrid.widthProperty().divide(4).subtract(20));
 
         VBox infoBox = createFruitInfoBox(fruit);
-
-        card.getChildren().add(createFruitImageNode(fruit));
         card.getChildren().addAll(infoBox.getChildren());
 
         return card;
@@ -324,16 +308,15 @@ public class MainViewController {
     @FXML
     private void filterFruit() {
 
-        String searchText = searchField.getText() == null
-                ? ""
-                : searchField.getText().toLowerCase();
+        String searchText = searchField.getText().toLowerCase();
 
         List<Fruit> filteredList = new ArrayList<>();
 
         for (Fruit fruit : fruitList) {
 
-            if (fruit.getName() != null
-                    && fruit.getName().toLowerCase().contains(searchText)) {
+            if (fruit.getName().toLowerCase().contains(searchText)
+                    || fruit.getCategory().toLowerCase().contains(searchText)) {
+
                 filteredList.add(fruit);
             }
         }
@@ -341,58 +324,5 @@ public class MainViewController {
         fruitGrid.getChildren().clear();
 
         createFruitCards(filteredList);
-    }
-
-    private String buildImagePath(String fruitName) {
-        if (fruitName == null || fruitName.isBlank()) {
-            return null;
-        }
-
-        String normalizedName = Normalizer.normalize(fruitName, Normalizer.Form.NFD)
-                .replaceAll("\\p{M}", "")
-                .toLowerCase()
-                .replaceAll("[^a-z0-9]+", "");
-
-        return "/Images/" + normalizedName + ".png";
-    }
-
-    private Node createFruitImageNode(Fruit fruit) {
-        Image image = loadImage(fruit.getImagePath());
-
-        if (image != null) {
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(120);
-            imageView.setFitHeight(120);
-            imageView.setPreserveRatio(true);
-            return imageView;
-        }
-
-        Label placeholder = new Label("Geen afbeelding");
-        placeholder.setPrefSize(120, 120);
-        placeholder.setMinSize(120, 120);
-        placeholder.setMaxSize(120, 120);
-        placeholder.setWrapText(true);
-        placeholder.setAlignment(Pos.CENTER);
-        placeholder.setStyle(
-                "-fx-background-color: #f4f4f4; "
-                        + "-fx-border-color: #d0d0d0; "
-                        + "-fx-border-radius: 8; "
-                        + "-fx-background-radius: 8; "
-                        + "-fx-text-fill: #666666;"
-        );
-        return placeholder;
-    }
-
-    private Image loadImage(String resourcePath) {
-        if (resourcePath == null || resourcePath.isBlank()) {
-            return null;
-        }
-
-        var resource = getClass().getResource(resourcePath);
-        if (resource == null) {
-            return null;
-        }
-
-        return new Image(resource.toExternalForm());
     }
 }
