@@ -313,7 +313,7 @@ public class MainViewController {
 
         Button addButton = new Button("Voeg toe");
         Button infoButton = new Button("Meer info");
-//        infoButton.getStyleClass().add("show-button");
+//        infoButton.getStyleClass().add("show-button"); styling later als nodig.
 
 
         addButton.setOnAction(e -> addOne(fruit));
@@ -322,6 +322,7 @@ public class MainViewController {
         return new VBox(6, name, herkomst, price, unit, category, addButton, infoButton);
     }
 
+    // Fruit info popup.
     private void showFruitInfo(Fruit fruit) {
 
         Stage popup = new Stage(); //  Een nieuwe venster.
