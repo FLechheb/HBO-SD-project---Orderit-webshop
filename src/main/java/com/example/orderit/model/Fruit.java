@@ -13,7 +13,6 @@ public class Fruit extends Product {
     @JsonProperty("price")
     private double price;
 
-
     @JsonProperty("unit")
     private String unit;
 
@@ -22,7 +21,14 @@ public class Fruit extends Product {
 
     @JsonProperty("herkomst")
     private String herkomst;
+
     private String imagePath;
+
+    @JsonProperty("verhaal")
+    private String verhaal;
+
+    @JsonProperty("producent")
+    private Producent producent;
 
 
     public Fruit() {
@@ -62,5 +68,13 @@ public class Fruit extends Product {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getVerhaal() {
+        return verhaal;
+    }
+
+    public Producent getProducent() {
+        return producent;
     }
 }
