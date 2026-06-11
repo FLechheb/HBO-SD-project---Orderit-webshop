@@ -23,6 +23,8 @@ import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.TextArea;
 
 public class MainViewController {
 
@@ -59,6 +61,8 @@ public class MainViewController {
 
     @FXML
     private ChoiceBox<String> categoryBox;
+
+
 
 
     // plus en min in winkelmandje
@@ -284,6 +288,7 @@ public class MainViewController {
 
     private VBox createFruitCard(Fruit fruit) {
         VBox card = new VBox(8);
+        card.setAlignment(Pos.TOP_LEFT);
         card.getStyleClass().add("card");
         card.prefWidthProperty().bind(fruitGrid.widthProperty().divide(4).subtract(20));
 
@@ -293,6 +298,7 @@ public class MainViewController {
         card.getChildren().addAll(infoBox.getChildren());
 
         return card;
+
     }
 
     private VBox createFruitInfoBox(Fruit fruit) {
@@ -313,76 +319,51 @@ public class MainViewController {
 
         Button addButton = new Button("Voeg toe");
         Button infoButton = new Button("Meer info");
-//        infoButton.getStyleClass().add("show-button"); styling later als nodig.
+        infoButton.getStyleClass().add("show-button");
+
+
+        TextArea verhaal = new TextArea(fruit.getVerhaal());
+        verhaal.setWrapText(true);
+        verhaal.setEditable(false);
+        verhaal.setPrefRowCount(4);
+        TextArea boerbericht = new TextArea(fruit.getProducent().getBoerBericht());
+        boerbericht.setWrapText(true);
+        boerbericht.setEditable(false);
+        boerbericht.setPrefRowCount(4);
+
+        VBox details = new VBox(
+                5,
+                new Label("Boer: " + fruit.getProducent().getBoer()),
+                new Label("Boerderij: " + fruit.getProducent().getBoerderij()),
+                new Label("Verhaal:"),
+                verhaal,
+                new Label("Bericht van de boer:")
+                , boerbericht
+        );
+
+        TitledPane detailsPane = new TitledPane("Meer info", details);
+        detailsPane.setCollapsible(true);
+        detailsPane.setExpanded(false);
+        detailsPane.setAnimated(false);
 
 
         addButton.setOnAction(e -> addOne(fruit));
-        infoButton.setOnAction(e -> showFruitInfo(fruit));
+        infoButton.setOnAction(e -> {
 
-        return new VBox(6, name, herkomst, price, unit, category, addButton, infoButton);
-    }
+        });
 
-    // Fruit info popup.
-    private void showFruitInfo(Fruit fruit) {
-
-        Stage popup = new Stage(); //  Een nieuwe venster.
-
-        VBox root = new VBox(10); //  Een container waarin componenten worden gezet.
-
-        root.setStyle("-fx-padding:20;"); // VBox styling.
-
-        // componenten zetten in de Vbox.
-        Label naam = new Label(fruit.getName());
-
-        Label herkomst = new Label(
-                "Herkomst: " + fruit.getHerkomst()
-        );
-
-        Label prijs = new Label(
-                "Prijs: €" + fruit.getPrice()
-        );
-
-        Label verhaal = new Label(
-                "Verhaal: " +
-                fruit.getVerhaal()
-        );
-
-        Label boer = new Label(
-                "Boer: " +
-                        fruit.getProducent().getBoer()
-        );
-
-        Label boerderij = new Label(
-                "Boerderij: " +
-                        fruit.getProducent().getBoerderij()
-        );
-
-        Label bericht = new Label(
-                fruit.getProducent().getBoerBericht()
-        );
-
-        root.getChildren().addAll(
-                naam,
+        return new VBox(
+                6,
+                name,
                 herkomst,
-                prijs,
-                verhaal,
-                boer,
-                boerderij,
-                bericht
+                price,
+                unit,
+                category,
+                addButton,
+                detailsPane
         );
-
-        // Een nieuwe SCene maken en Vbox er in zetten.
-        Scene scene = new Scene(root, 1000, 250);
-
-        // De Scene in de Stage zetten.
-        popup.setScene(scene);
-
-        // Geef een titel aan de Stage.
-        popup.setTitle(fruit.getName());
-
-        //De Stage laten zien.
-        popup.show();
     }
+
 
 
     //zoekbalk
@@ -425,12 +406,19 @@ public class MainViewController {
     private Node createFruitImageNode(Fruit fruit) {
         Image image = loadImage(fruit.getImagePath());
 
+
         if (image != null) {
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(120);
             imageView.setFitHeight(120);
             imageView.setPreserveRatio(true);
-            return imageView;
+
+            VBox imageBox = new VBox(imageView);
+            imageBox.setPrefHeight(120);
+            imageBox.setMinHeight(120);
+            imageBox.setAlignment(Pos.CENTER);
+
+            return imageBox;
         }
 
         Label placeholder = new Label("Geen afbeelding");
