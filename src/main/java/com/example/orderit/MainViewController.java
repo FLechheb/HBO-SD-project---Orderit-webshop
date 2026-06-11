@@ -2,29 +2,27 @@ package com.example.orderit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.orderit.model.Fruit;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import com.example.orderit.model.CartItem;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class MainViewController {
 
@@ -314,11 +312,78 @@ public class MainViewController {
         category.getStyleClass().add("fruit-category");
 
         Button addButton = new Button("Voeg toe");
+        Button infoButton = new Button("Meer info");
+//        infoButton.getStyleClass().add("show-button"); styling later als nodig.
+
 
         addButton.setOnAction(e -> addOne(fruit));
+        infoButton.setOnAction(e -> showFruitInfo(fruit));
 
-        return new VBox(6, name, herkomst, price, unit, category, addButton);
+        return new VBox(6, name, herkomst, price, unit, category, addButton, infoButton);
     }
+
+    // Fruit info popup.
+    private void showFruitInfo(Fruit fruit) {
+
+        Stage popup = new Stage(); //  Een nieuwe venster.
+
+        VBox root = new VBox(10); //  Een container waarin componenten worden gezet.
+
+        root.setStyle("-fx-padding:20;"); // VBox styling.
+
+        // componenten zetten in de Vbox.
+        Label naam = new Label(fruit.getName());
+
+        Label herkomst = new Label(
+                "Herkomst: " + fruit.getHerkomst()
+        );
+
+        Label prijs = new Label(
+                "Prijs: €" + fruit.getPrice()
+        );
+
+        Label verhaal = new Label(
+                "Verhaal: " +
+                fruit.getVerhaal()
+        );
+
+        Label boer = new Label(
+                "Boer: " +
+                        fruit.getProducent().getBoer()
+        );
+
+        Label boerderij = new Label(
+                "Boerderij: " +
+                        fruit.getProducent().getBoerderij()
+        );
+
+        Label bericht = new Label(
+                fruit.getProducent().getBoerBericht()
+        );
+
+        root.getChildren().addAll(
+                naam,
+                herkomst,
+                prijs,
+                verhaal,
+                boer,
+                boerderij,
+                bericht
+        );
+
+        // Een nieuwe SCene maken en Vbox er in zetten.
+        Scene scene = new Scene(root, 1000, 250);
+
+        // De Scene in de Stage zetten.
+        popup.setScene(scene);
+
+        // Geef een titel aan de Stage.
+        popup.setTitle(fruit.getName());
+
+        //De Stage laten zien.
+        popup.show();
+    }
+
 
     //zoekbalk
     @FXML
