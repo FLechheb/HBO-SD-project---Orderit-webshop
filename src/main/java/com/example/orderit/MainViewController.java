@@ -25,6 +25,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TextArea;
+import com.example.orderit.model.Fruit;
+import com.example.orderit.model.Deals;
 
 public class MainViewController {
 
@@ -61,6 +63,7 @@ public class MainViewController {
 
     @FXML
     private ChoiceBox<String> categoryBox;
+
 
 
 
@@ -149,6 +152,7 @@ public class MainViewController {
     @FXML
     public void initialize() {
 
+
         categoryBox.getItems().add("Alle");
         categoryBox.getItems().add("Citrusvruchten");
         categoryBox.getItems().add("Tropisch fruit");
@@ -182,11 +186,56 @@ public class MainViewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        List<Fruit> tropischFruit = new ArrayList<>();
+        List<Fruit> bessenFruit = new ArrayList<>();
+
+        for (Fruit fruit : fruitList) {
+
+            if (fruit.getCategory().equals("Tropisch fruit")) {
+                tropischFruit.add(fruit);
+            }
+
+            if (fruit.getCategory().equals("Bessen")) {
+                bessenFruit.add(fruit);
+            }
+        }
+
+        Deals tropischDeal = new Deals(
+                "Tropisch Fruitpakket",
+                tropischFruit
+        );
+
+        Deals bessenDeal = new Deals(
+                "Bessenpakket",
+                bessenFruit
+        );
+        tropischDeal.setImagePath(
+                buildImagePath(tropischDeal.getName())
+        );
+
+        bessenDeal.setImagePath(
+                buildImagePath(bessenDeal.getName())
+        );
+        fruitList.add(tropischDeal);
+        fruitList.add(bessenDeal);
+
+        System.out.println("Aantal producten: " + fruitList.size());
+
+        for (Fruit fruit : fruitList) {
+            System.out.println(fruit.getName());
+        }
 
         //productenpagina sorteren op categorie
 
         fruitList.sort((f1, f2) ->
                 f1.getCategory().compareTo(f2.getCategory()));
+        for (Fruit fruit : fruitList) {
+            System.out.println(
+                    fruit.getName()
+                            + " | "
+                            + fruit.getCategory()
+            );
+        }
         createFruitCards(fruitList);
 
         //winklemandje
@@ -333,11 +382,20 @@ public class MainViewController {
 
         VBox details = new VBox(
                 5,
-                new Label("Boer: " + fruit.getProducent().getBoer()),
-                new Label("Boerderij: " + fruit.getProducent().getBoerderij()),
-                new Label("Verhaal:"),
+                new Label(
+                        fruit.getBoerLabel()
+                                + " "
+                                + fruit.getProducent().getBoer()
+                ),
+
+                new Label(
+                        fruit.getBoerderijLabel()
+                                + " "
+                                + fruit.getProducent().getBoerderij()
+                ),
+                new Label(fruit.getVerhaalLabel()),
                 verhaal,
-                new Label("Bericht van de boer:")
+                new Label(fruit.getBerichtLabel())
                 , boerbericht
         );
 
@@ -363,7 +421,6 @@ public class MainViewController {
                 detailsPane
         );
     }
-
 
 
     //zoekbalk
@@ -446,7 +503,10 @@ public class MainViewController {
         if (resource == null) {
             return null;
         }
-
+        System.out.println(resourcePath);
+        System.out.println(getClass().getResource(resourcePath));
         return new Image(resource.toExternalForm());
     }
+
+
 }

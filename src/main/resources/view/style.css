@@ -5,19 +5,19 @@
 }
 
 .card {
-    -fx-background-color: #e9d7c6;
+    -fx-background-color: #fffbe4;
     -fx-padding: 12;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: #ef7706;
     -fx-border-width: 1;
-    -fx-effect: innershadow(gaussian, rgba(255,169,95,0.72), 6, 0, 0, 1);
+    -fx-effect: innershadow(gaussian, rgba(255,251,228,0.72), 6, 0, 0, 1);
 }
 
 .fruit-name {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2b2b2b;
+    -fx-text-fill: #000000;
 }
 
 .fruit-herkomst {

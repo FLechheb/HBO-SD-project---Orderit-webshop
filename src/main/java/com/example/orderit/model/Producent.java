@@ -3,6 +3,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Producent {
+    public Producent() {
+    }
+    public Producent(
+            String boer,
+            String boerderij,
+            String provincie_of_streek,
+            String boer_bericht) {
+
+        this.boer = boer;
+        this.boerderij = boerderij;
+        this.provincie_of_streek = provincie_of_streek;
+        this.boer_bericht = boer_bericht;
+    }
 
     @JsonProperty("boer")
     private String boer;
