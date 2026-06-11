@@ -7,11 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Fruit extends Product {
 
-    @JsonProperty("naam")
-    private String name;
-
-    @JsonProperty("price")
-    private double price;
 
     @JsonProperty("unit")
     private String unit;
@@ -34,24 +29,14 @@ public class Fruit extends Product {
     public Fruit() {
     }
 
-    public Fruit(String name, double price, String unit, String category, String herkomst) {
-        this.name = name;
-        this.price = price;
+    public Fruit(String unit, String category, String herkomst) {
         this.unit = unit;
         this.category = category;
         this.herkomst = herkomst;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getUnit() {
         return unit;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     public String getCategory() {
