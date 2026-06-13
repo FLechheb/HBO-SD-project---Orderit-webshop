@@ -62,4 +62,30 @@ public class Fruit extends Product {
     public Producent getProducent() {
         return producent;
     }
+
+    @Override
+    public String getDisplayTitle() {
+        return getName();
+    }
+
+    @Override
+    public String getDisplaySubtitle() {
+        return "Uit " + herkomst;
+    }
+
+    public String getVerhaalLabel() {
+        return "Verhaal:";
+    }
+
+    public String getBerichtLabel() {
+        return "Bericht van de boer:";
+    }
+
+    public String getBoerLabel() {
+        return "Boer:";
+    }
+
+    public String getBoerderijLabel() {
+        return "Boerderij:";
+    }
 }

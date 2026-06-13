@@ -6,26 +6,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
 
-@JsonProperty("naam")
-protected String name;
 
-@JsonProperty("price")
-protected double price;
+        @JsonProperty("naam")
+        protected String name;
 
+        @JsonProperty("price")
+        protected double price;
 
-    public Product() {
+        public String getName() {
+            return name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public String getDisplayTitle() {
+            return name;
+        }
+
+        public String getDisplaySubtitle() {
+            return "";
+        }
+
+        public String getDisplayDescription() {
+            return "";
+        }
     }
-
-    public Product(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-}
